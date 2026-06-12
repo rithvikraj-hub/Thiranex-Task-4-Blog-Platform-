@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Post</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Create Blog Post</h2>
+
+<form id="postForm">
+    <input type="text" id="title" placeholder="Post Title" required>
+
+    <textarea id="content" placeholder="Write your content..." rows="6" required></textarea>
+
+    <input type="text" id="author" placeholder="Author Name" required>
+
+    <button type="submit">Publish Post</button>
+</form>
+
+<script>
+document.getElementById("postForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const post = {
+        title: document.getElementById("title").value,
+        content: document.getElementById("content").value,
+        author: document.getElementById("author").value
+    };
+
+    const res = await fetch("http://localhost:5000/api/posts", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(post)
+    });
+
+    const data = await res.json();
+
+    alert(data.message);
+});
+</script>
+
+</body>
+</html>
